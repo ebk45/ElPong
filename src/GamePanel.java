@@ -37,7 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
   }
 
   public void newPaddles() {
-
+    paddle1 = new Paddle(0, (GAME_HEIGHT / 2) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT, 1);
+    paddle2 = new Paddle(GAME_WIDTH-PADDLE_WIDTH, (GAME_HEIGHT / 2) - (PADDLE_HEIGHT / 2), PADDLE_WIDTH, PADDLE_HEIGHT, 2);
   }
 
   public void paint(Graphics g) {
@@ -48,7 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
   }
 
   public void draw(Graphics g) {
-
+    paddle1.draw(g);
+    paddle2.draw(g);
   }
 
   public void move() {
@@ -56,7 +58,19 @@ public class GamePanel extends JPanel implements Runnable {
   }
 
   public void checkCollision() {
-
+    // stops paddles at window edge
+    if (paddle1.y <= 0) {
+      paddle1.y = 0;
+    }
+    if (paddle1.y >= (GAME_HEIGHT - PADDLE_HEIGHT)) {
+      paddle1.y = GAME_HEIGHT - PADDLE_HEIGHT;
+    }
+    if (paddle2.y <= 0) {
+      paddle2.y = 0;
+    }
+    if (paddle2.y >= (GAME_HEIGHT - PADDLE_HEIGHT)) {
+      paddle2.y = GAME_HEIGHT - PADDLE_HEIGHT;
+    }
   }
 
   public void run() {
@@ -81,11 +95,13 @@ public class GamePanel extends JPanel implements Runnable {
 
   public class ActionListener extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
-
+      paddle1.keyPressed(e);
+      paddle2.keyPressed(e);
     }
 
     public void keyReleased(KeyEvent e) {
-
+      paddle1.keyReleased(e);
+      paddle2.keyReleased(e);
     }
   }
 }
